@@ -1,0 +1,4 @@
+diagram
+=======
+
+diagram editor library.
