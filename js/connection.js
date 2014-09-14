@@ -9,9 +9,18 @@
 	    this.elem = this.snap.path("M0 0L0 0").attr({
 	        fill: "none",
 	        stroke: "#333",
-	        strokeWidth: 5
+	        strokeWidth: 4
 	    });
-		diagram.base.append(this.elem);
+	    this.coll = this.snap.path("M0 0L0 0").attr({
+	    	visibility : "hidden",
+	    	"pointer-events" : "stroke",
+	        strokeWidth: 20
+	    });
+		this.coll.addClass("node");
+
+		diagram.getGroup().append(this.elem);
+		diagram.getGroup().append(this.coll);
+
 		this.setStartPos(start.x, start.y);
 		this.setEndPos(end.x, end.y);
 
@@ -21,7 +30,7 @@
 			onclick : null,
 			onmove : null
 		};
-		this.elem.drag(function(dx, dy, x, y, e) {
+		this.coll.drag(function(dx, dy, x, y, e) {
 			self.setStartPos(self.base_start.x + dx, self.base_start.y + dy);
 			self.setEndPos(self.base_end.x + dx, self.base_end.y + dy);
 			if(self.listeners.onmove) self.listeners.onmove();
@@ -33,7 +42,7 @@
 		}, function(e) {
 			diagram.fireOnConUpdate(self);
 		});
-		this.elem.click(function() {
+		this.coll.click(function() {
 			if(self.listeners.onclick) self.listeners.onclick();
 		});
 	}
@@ -73,6 +82,9 @@
 
 	Connection.prototype.refresh = function() {
 		this.elem.attr({
+			d : "M"+this.start.x+" "+this.start.y+"L"+this.end.x+" "+this.end.y
+		});
+		this.coll.attr({
 			d : "M"+this.start.x+" "+this.start.y+"L"+this.end.x+" "+this.end.y
 		});
 	}

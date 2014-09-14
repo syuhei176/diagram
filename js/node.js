@@ -11,11 +11,12 @@
 			w : bound.w,
 			h : bound.h
 		};
+		this.color = "#fff";
 		this.type = type;
 		if(type == "rect") this.elem = s.rect(0, 0, this.bound.w, this.bound.h);
 		else if(type == "ellipse") this.elem = s.ellipse(this.bound.w/2, this.bound.h/2, this.bound.w/2, this.bound.h/2);
 		else this.elem = s.ellipse(0, 0, this.bound.w, this.bound.h);
-		diagram.base.append(this.elem);
+		diagram.getGroup().append(this.elem);
 		this.start_pos = {
 			x : 0,
 			y : 0
@@ -41,10 +42,11 @@
 
 	Node.prototype.init = function(onclick) {
 		this.elem.attr({
-			fill: "#fff",
+			fill: this.color,
 			stroke: "#000",
 			strokeWidth: 1			
-		})
+		});
+		this.elem.addClass("node");
 		this.refresh();
 	}
 

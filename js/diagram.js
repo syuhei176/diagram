@@ -33,6 +33,10 @@
 	    });
 	}
 
+	Diagram.prototype.getGroup = function() {
+		return this.base;
+	}
+	
 	Diagram.prototype.addNode = function(id, type, bound) {
 		var self = this;
 		var node = new Node(id, this.snap, this, bound, type);

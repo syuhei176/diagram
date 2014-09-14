@@ -9,6 +9,7 @@
         <script src="http://cdn.mlkcca.com/v0.2.8/milkcocoa.js"></script>
         <script src="/js/lib/vue.min.js"></script>
         <script src="/js/lib/snap.svg-min.js"></script>
+        <script src="/js/lib/jsmodal.js"></script>
 		<link rel="stylesheet" href="/css/blogs.css" type="text/css" />
     </head>
     <body>
@@ -24,11 +25,63 @@
                 <svg style="width: 36px; height: 36px; display: block; position: relative; overflow: hidden; cursor: pointer; left: 2px; top: 2px;"><g><g></g><g><g transform="translate(0.5,0.5)" style="visibility: visible;"><path d="M 2 33 L 33 2" fill="none" stroke="white" stroke-miterlimit="10" pointer-events="stroke" visibility="hidden" stroke-width="9"></path><path d="M 2 33 L 33 2" fill="none" stroke="#000000" stroke-miterlimit="10"></path></g></g><g></g><g></g></g></svg>
             </a>
         </div>
+        <!-- Modal -->
+        <div id="initmodal" class="jsmodal-window">
+
+        <div class="jsmodal-window-header">
+        <h1 class="jsmodal-window-headline">ダイアグラムを作成する</h1>
+        </div>
+
+        <div class="jsmodal-window-body">
+        <form>
+        <dl>
+        <dt class="jsmodal-window-form-label">図の名前</dt>
+        <dd class="jsmodal-window-form-input"><input type="" class="form-control" id="diagram-name"></dd>
+
+
+        </dl>
+
+        <div id="message"></div>
+
+        <a id="create-btn" class="jsmodal-window-btn" role="button">作成する</a>
+        </form>
+        </div>
+
+        <div class="jsmodal-window-footer">
+        </div>
+        </div>
+
+        <div id="message-no-email" style="display:none;">
+        <div class="jsmodal-window-alert">::content.dialog.please_input_email::</div>
+        </div>
+
+        <div id="message-signup-success" style="display:none;">
+        <div class="jsmodal-window-alert">::content.dialog.signup_success::</div>
+        </div>
+
+        <div id="message-email-taken" style="display:none;">
+        <div class="jsmodal-window-alert">::content.dialog.email_already_taken::</div>
+        </div>
+
+        <div id="message-email-invalid" style="display:none;">
+        <div class="jsmodal-window-alert">::content.dialog.email_invalid::</div>
+        </div>
+
+        <div id="message-signin-error" style="display:none;">
+        <div class="jsmodal-window-alert">::content.dialog.signin_error::</div>
+        </div>
+
+        <div id="message-email-verification-error" style="display:none;">
+        <div class="jsmodal-window-alert">::content.dialog.email_verification_error::</div>
+        </div>
+        <!-- /Modal -->
+
         <script src="/js/node.js"></script>
         <script src="/js/connection.js"></script>
         <script src="/js/diagram.js"></script>
         <script src="/js/selector.js"></script>
         <script src="/js/main.js"></script>
+        <script src="/js/start.js"></script>
     </body>
 </html>
 
