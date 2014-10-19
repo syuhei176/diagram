@@ -5,6 +5,8 @@
 	function Node(id, s, diagram, bound, type) {
 		var self = this;
 		this.id = id;
+		if(typeof bound.w != "number" || bound.w <= 1) bound.w = 2;
+		if(typeof bound.h != "number" || bound.h <= 1) bound.h = 2;
 		this.bound = {
 			x : bound.x,
 			y : bound.y,
@@ -15,6 +17,7 @@
 		this.type = type;
 		if(type == "rect") this.elem = s.rect(0, 0, this.bound.w, this.bound.h);
 		else if(type == "ellipse") this.elem = s.ellipse(this.bound.w/2, this.bound.h/2, this.bound.w/2, this.bound.h/2);
+		else if(type == "rectangle") this.elem = s.rect(0, 0, this.bound.w, this.bound.h, 5, 5);
 		else this.elem = s.ellipse(0, 0, this.bound.w, this.bound.h);
 		diagram.getGroup().append(this.elem);
 		this.start_pos = {
@@ -50,6 +53,9 @@
 		this.refresh();
 	}
 
+	Node.prototype.remove = function() {
+	}
+
 	Node.prototype.onclick = function(onclick) {
 		this.listeners.onclick = onclick;
 	}
@@ -81,24 +87,28 @@
 	}
 
 	Node.prototype.setSize = function(w, h) {
+		if(typeof w != "number" || w <= 1) w = 2;
+		if(typeof h != "number" || h <= 1) h = 2;
 		this.bound.w = w;
 		this.bound.h = h;
 		this.refresh();
 	}
 	
 	Node.prototype.setW = function(w) {
+		if(typeof w != "number" || w <= 1) w = 2;
 		this.bound.w = w;
 		this.refresh();
 	}
 
 	Node.prototype.setH = function(h) {
+		if(typeof h != "number" || h <= 1) h = 2;
 		this.bound.h = h;
 		this.refresh();
 	}
 
 	Node.prototype.refresh = function() {
 		this.elem.transform("translate("+this.bound.x+","+this.bound.y+")");
-		if(this.type == "rect") {
+		if(this.type == "rect" || this.type == "rectangle") {
 			this.elem.attr({
 				width : this.bound.w,
 				height : this.bound.h

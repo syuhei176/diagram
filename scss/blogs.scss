@@ -79,11 +79,30 @@ a{color: $main-text; background: transparent}
   margin: 4px;
 }
 
+
+#head-menu{
+  position: absolute;
+  left: 120px;
+  top: 0px;
+  width: 100%;
+  background-color: #f0f0f0;
+  border-bottom: 4px solid #ddd;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.menu-item {
+  float: left;
+  cursor: pointer;
+}
+
 #pallet {
   position: absolute;
   left: 0px;
   top: 0px;
-  width: 180px;
+  width: 120px;
   height: 100%;
   background-color: #f0f0f0;
   border-right: 4px solid #ddd;

@@ -4,7 +4,7 @@
 		var self = this;
 		this.snap = s;
 		this.base = this.snap.group();
-	    var base_rect = this.snap.rect(0, 0, 1024, 900);
+	    var base_rect = this.snap.rect(0, 0, 1200, 800);
 	    this.base.append(base_rect);
 	    var gui_group = this.snap.group();
 	    base_rect.attr({
@@ -20,6 +20,7 @@
 
 	    this.listeners = {
 	    	nodeupdate : [],
+	    	noderemove : [],
 	    	conupdate : []
 	    };
 	    this.nodes = {};
@@ -27,6 +28,9 @@
 
 	    this.selector.on("changed", function(node) {
 	    	self.fireOnNodeUpdate(node);
+	    });
+	    this.selector.on("removed", function(node) {
+	    	self.fireOnNodeRemove(node);
 	    });
 	    this.connection_selector.on("changed", function(con) {
 	    	self.fireOnConUpdate(con);
@@ -36,7 +40,7 @@
 	Diagram.prototype.getGroup = function() {
 		return this.base;
 	}
-	
+
 	Diagram.prototype.addNode = function(id, type, bound) {
 		var self = this;
 		var node = new Node(id, this.snap, this, bound, type);
@@ -45,6 +49,18 @@
     	});
     	this.nodes[id] = node;
 	}
+
+	Diagram.prototype.remove = function(id) {
+		var self = this;
+    	var elem = this.nodes[id];
+    	if(elem) {
+    		elem.remove();
+    	}else{
+	    	elem = this.connections[id];
+	    	elem.remove();
+    	}
+	}
+
 
 	Diagram.prototype.updateNode = function(id, bound) {
 		var self = this;
@@ -69,6 +85,12 @@
 
 	Diagram.prototype.on = function(event, cb) {
 		this.listeners[event].push(cb);
+	}
+
+	Diagram.prototype.fireOnNodeRemove = function(e) {
+		this.listeners["noderemove"].forEach(function(l) {
+			l(e);
+		});
 	}
 
 	Diagram.prototype.fireOnNodeUpdate = function(e) {

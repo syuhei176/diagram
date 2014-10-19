@@ -11,7 +11,8 @@
 		};
 		this.target = null;
 		this.listeners = {
-			changed : []
+			changed : [],
+			removed : []
 		};
 		this.group = snap.group();
 		g.append(this.group);
@@ -23,7 +24,8 @@
 			nw : snap.circle(0, 0, Selector.CursorRange),
 			ne : snap.circle(100, 0, Selector.CursorRange),
 			sw : snap.circle(0, 100, Selector.CursorRange),
-			se : snap.circle(100, 100, Selector.CursorRange)
+			se : snap.circle(100, 100, Selector.CursorRange),
+			remove : snap.circle(120, 50, Selector.CursorRange)
 		}
 		for(var key in this.cursor) {
 			this.cursor[key].attr({
@@ -71,6 +73,11 @@
 			self.target.setSize(self.target_bound.w + dx, self.target_bound.h + dy);
 			self.refresh();
 		}, start, end);
+		this.cursor["remove"].click(function() {
+			self.fireOnRemoved(self.target);
+			self.clear();
+		}, start, end);
+		
 
 		function start() {
 
@@ -87,6 +94,12 @@
 
 	Selector.prototype.fireOnChanged = function(e) {
 		this.listeners["changed"].forEach(function(l) {
+			l(e);
+		});
+	}
+
+	Selector.prototype.fireOnRemoved = function(e) {
+		this.listeners["removed"].forEach(function(l) {
 			l(e);
 		});
 	}

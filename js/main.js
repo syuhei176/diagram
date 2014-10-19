@@ -1,8 +1,24 @@
 (function(){
+    var milkcocoa = new MilkCocoa("https://io-mi02d8kdu.mlkcca.com:443/");
 
     window.edit_diagram = edit_diagram;
-    
+
     function edit_diagram(name) {
+        $("#open-register-modal").click(function() {
+            var initmodal = jsmodal("register-modal");
+            initmodal.open({
+                modal : false
+            });
+            $("#register-btn").click(function() {
+                var name = $("#diagram-name").val();
+                if(name == "") return false;
+                initmodal.close();
+                location.hash = name;
+                edit_diagram(name);
+                return false;
+            });
+        });
+
         var s = Snap("#canvas");
         var diagram = new Diagram(s);
         $("#pallet-circle").click(function() {
@@ -29,6 +45,18 @@
                 }
             });
         });
+        $("#pallet-rectangle").click(function() {
+            drawing.push({
+                meta : "node",
+                type : "rectangle",
+                bound : {
+                    x : 204,
+                    y : 80,
+                    w : 100,
+                    h : 70                
+                }
+            });
+        });
         $("#pallet-line").click(function() {
             drawing.push({
                 meta : "connection",
@@ -42,8 +70,7 @@
                 }
             });
         });
-
-        var milkcocoa = new MilkCocoa("https://io-mi02d8kdu.mlkcca.com:443/");
+        
         var drawing = milkcocoa.dataStore("drawing").child(name);
         drawing.query({}).done(function(elems) {
             elems.forEach(function(e) {
@@ -71,13 +98,21 @@
             }
             update_title();
         });
+
+        drawing.on("remove", function(e) {
+            diagram.remove(e.id);
+            update_title();
+        });
+
         diagram.on("nodeupdate", function(node) {
             drawing.set(node.id, {
                 meta : "node",
                 bound : node.bound
             });
         });
-
+        diagram.on("noderemove", function(node) {
+            drawing.remove(node.id);
+        });
         diagram.on("conupdate", function(con) {
             drawing.set(con.id, {
                 meta : "connection",
