@@ -21,7 +21,7 @@
 			return false;
 		});
 		$("#create-private-btn").click(function() {
-			milkcocoa.getCurrentUser(function(err, user) {
+			milkcocoa.user(function(err, user) {
 				if(err) {
 					open_dialog();
 				}else{

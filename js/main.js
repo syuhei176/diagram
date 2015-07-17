@@ -1,5 +1,5 @@
 (function(){
-    var milkcocoa = new MilkCocoa("https://io-mi02d8kdu.mlkcca.com:443/");
+    var milkcocoa = new MilkCocoa("flagi9edsvtg.mlkcca.com");
 
     window.edit_diagram = edit_diagram;
 
@@ -72,12 +72,12 @@
         });
         
         var drawing = milkcocoa.dataStore("drawing").child(name);
-        drawing.query({}).done(function(elems) {
+        drawing.stream().next(function(err, elems) {
             elems.forEach(function(e) {
-                if(e.meta == "node") {
-                    diagram.addNode(e.id, e.type, e.bound);
-                }else if(e.meta == "connection") {
-                    diagram.addConnection(e.id, e.start, e.end);
+                if(e.value.meta == "node") {
+                    diagram.addNode(e.id, e.value.type, e.value.bound);
+                }else if(e.value.meta == "connection") {
+                    diagram.addConnection(e.id, e.value.start, e.value.end);
                 }            
             });
         });

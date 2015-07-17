@@ -1,4 +1,8 @@
 diagram
 =======
 
-diagram editor library.
+Diagram Editor.
+
+Real-time collaboration with Milkcocoa.
+
+https://mlkcca.com
